@@ -20,51 +20,28 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 
-class InnerBottomRightRounded(val widthmarker: Float = 8f) : Shape {
+class InnerBottomRightRounded(val widthmarker: Float = 8f, val cornerSizeX : Float, val cornerSizeY : Float, val cornerRadius : Float = 0f) : Shape {
     override fun createOutline(
         size: Size,
         layoutDirection: LayoutDirection,
         density: Density
     ): Outline {
 
-        val rect = Rect(Offset(size.width* 0.75f - 4f, size.height * 0.75f - 4f), Size(size.width/4, size.height/4))
 
         val path = Path().apply {
-            moveTo(0f, size.height - widthmarker)
-            lineTo(size.width * 0.75f, size.height - widthmarker)
-            arcTo(rect, 90f, -90f, false)
+            moveTo(0f, size.height)
+            lineTo(cornerSizeX, size.height - widthmarker)
+
+            quadraticBezierTo(size.width + 15f, size.height + 15f,  size.width - widthmarker, cornerSizeY)
+
             lineTo(size.width - widthmarker, 0f)
-            lineTo(size.width + 20f, 0f)
+            lineTo(size.width + 20f, - 20f)
             lineTo(size.width + 20f, size.height+ 20f)
             lineTo(0f, size.height+ 20f)
+            close()
 
         }
 
         return Outline.Generic(path)
-    }
-}
-
-@Preview
-@Composable
-fun preview() {
-    Box(
-        modifier = Modifier
-            .size(200.dp)
-            .background(Color.Black)
-            .drawBehind {
-                val path = Path()
-
-                val oval = Rect(50f, 50f, size.width - 50f, size.height - 50f)
-
-                path.addArc(oval, 180f, 90f)
-
-                drawPath(
-                    path = path,
-                    color = Color.White,
-                    style = Stroke(width = 4f)
-                )
-            },
-        contentAlignment = Alignment.Center
-    ) {
     }
 }

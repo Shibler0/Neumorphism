@@ -47,6 +47,8 @@ fun Greeting() {
         ShadowOutterButton()
         Spacer(modifier = Modifier.height(10.dp))
         ShadowInnerButton()
+        Spacer(modifier = Modifier.height(10.dp))
+        ShadowInnerRounded()
     }
 
 
